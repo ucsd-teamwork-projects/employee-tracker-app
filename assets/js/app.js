@@ -36,28 +36,28 @@ $("#addEmployeeButton").on("click", function () {
         rate: rate,
         startDate: startDate,
         dateAdded: firebase.database.ServerValue.TIMESTAMP
-      });
+    });
 });
 
-function addEmployeeToTable(){
+function addEmployeeToTable() {
     console.log("adding new employee to table")
-    var newEmployee = $("<tr>")
+    var newEmployee = $("<tr>");
+    var monthsWorked = moment().diff(moment(startDate), "months");
     newEmployee
         .append($("<th>").text(name).attr("scope", "row"))
         .append($("<td>").text(role))
-        .append($("<td>").text(moment(startDate).format("MM/DD/YYYY")))        
-        .append($("<td>").text("999"))
+        .append($("<td>").text(moment(startDate).format("MM/DD/YYYY")))
+        .append($("<td>").text(monthsWorked))
         .append($("<td>").text(rate))
-        .append($("<td>").text("999999"));
+        .append($("<td>").text(monthsWorked * rate))
 
     $("table tbody").append(newEmployee);
 }
 
-dbRef.orderByChild("dateAdded").limitToLast(1).on("child_added", function(snapshot) {
+dbRef.orderByChild("dateAdded").limitToLast(1).on("child_added", function (snapshot) {
     // Change the HTML to reflect
     addEmployeeToTable();
 
-  }, function(err){
-      console.log(err);
-  });
-
+}, function (err) {
+    console.log(err);
+});
