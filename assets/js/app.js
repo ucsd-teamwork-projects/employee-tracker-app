@@ -22,6 +22,13 @@ var dbRef = database.ref();
 
 
 $("#addEmployeeBtn").on("click", function () {
+    event.preventDefault();
+
+    name = $("#name-input").val().trim();
+    role = $("#role-input").val().trim();
+    startDate = $("#start-input").val().trim();
+    monthlyRate = $("#rate-input").val().trim();
+
     var newEmployee = $("<tr>")
     newEmployee
         .append($("<td>").text(name))
@@ -30,4 +37,12 @@ $("#addEmployeeBtn").on("click", function () {
         .append($("<td>").text(monthlyRate));
 
     $("#tableID tbody").append(newEmployee);
+
+    database.ref().push({
+        name: name,
+        email: email,
+        role: role,
+        monthlyRate: monthlyRate,
+      });
 });
+
