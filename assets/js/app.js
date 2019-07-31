@@ -49,7 +49,7 @@ function addEmployeeToTable(){
     $("#tableID tbody").append(newEmployee);
 }
 
-dataRef.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function(snapshot) {
+dbRef.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function(snapshot) {
     // Change the HTML to reflect
     addEmployeeToTable();
 
