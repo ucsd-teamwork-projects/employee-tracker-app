@@ -21,7 +21,8 @@ var database = firebase.database();
 var dbRef = database.ref();
 
 
-$("#addEmployeeBtn").on("click", function () {
+$("#addEmployeeButton").on("click", function () {
+    console.log("new employee submitted");
     event.preventDefault();
 
     name = $("#name-input").val().trim();
@@ -31,25 +32,28 @@ $("#addEmployeeBtn").on("click", function () {
 
     database.ref().push({
         name: name,
-        email: email,
         role: role,
         monthlyRate: monthlyRate,
+        startDate: startDate,
         dateAdded: firebase.database.ServerValue.TIMESTAMP
       });
 });
 
 function addEmployeeToTable(){
+    console.log("adding new employee to table")
     var newEmployee = $("<tr>")
     newEmployee
-        .append($("<td>").text(name))
+        .append($("<th>").text(name).attr("scope", "row"))
         .append($("<td>").text(role))
-        .append($("<td>").text(startDate))
-        .append($("<td>").text(monthlyRate));
+        .append($("<td>").text(startDate))        
+        .append($("<td>").text("999"))
+        .append($("<td>").text(monthlyRate))
+        .append($("<td>").text("999999"));
 
-    $("#tableID tbody").append(newEmployee);
+    $("table tbody").append(newEmployee);
 }
 
-dbRef.ref().orderByChild("dateAdded").limitToLast(1).on("child_added", function(snapshot) {
+dbRef.orderByChild("dateAdded").limitToLast(1).on("child_added", function(snapshot) {
     // Change the HTML to reflect
     addEmployeeToTable();
 
