@@ -1,7 +1,7 @@
 var name;
 var role;
 var startDate;
-var monthlyRate;
+var rate;
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
@@ -28,12 +28,12 @@ $("#addEmployeeButton").on("click", function () {
     name = $("#name-input").val().trim();
     role = $("#role-input").val().trim();
     startDate = $("#start-input").val().trim();
-    monthlyRate = $("#rate-input").val().trim();
+    rate = $("#rate-input").val().trim();
 
     database.ref().push({
         name: name,
         role: role,
-        monthlyRate: monthlyRate,
+        rate: rate,
         startDate: startDate,
         dateAdded: firebase.database.ServerValue.TIMESTAMP
       });
@@ -45,9 +45,9 @@ function addEmployeeToTable(){
     newEmployee
         .append($("<th>").text(name).attr("scope", "row"))
         .append($("<td>").text(role))
-        .append($("<td>").text(startDate))        
+        .append($("<td>").text(moment(startDate).format("MM/DD/YYYY")))        
         .append($("<td>").text("999"))
-        .append($("<td>").text(monthlyRate))
+        .append($("<td>").text(rate))
         .append($("<td>").text("999999"));
 
     $("table tbody").append(newEmployee);
